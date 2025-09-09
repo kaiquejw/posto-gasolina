@@ -51,7 +51,7 @@ int main (void) {
   
     do {
 
-        menu = fun_escreva ();
+        menu = fun_escreva (opcao);
   
         switch (menu){
             case 1:
@@ -167,6 +167,7 @@ float calcValor (float preco, float qtd) {
 	return preco*qtd;
 }
 
+
 //Alteração 2: adicionado const nos parâmetros
 int fun_invalidos (const float prEta, const float prGas, const float prAdit, const float tFila) {
     if (prEta < 0) 
@@ -180,13 +181,27 @@ int fun_invalidos (const float prEta, const float prGas, const float prAdit, con
     return 0;
 }
 
+// Alteração: Adicionada validação de entrada para tornar a função mais robusta
 int fun_escreva (int opcao) {
+    int valid_input; // Variável para verificar se a entrada é válida
+
     printf("\nPrograma para melhor experência dos clientes do posto de gasolina\n");
     printf("------------------------------------------------------------------\n");
     printf("1 - Adicionar um carro na fila\n2 - Abastecimento\n3 - Chamar o próximo\n4 - Relatórios\n5 - Encerrar\n");
     printf("------------------------------------------------------------------\n");
-    printf("Informe a opção: ");
-    scanf("%u", &opcao);
+
+    // Loop de validação para garantir que o usuário insira um número inteiro.
+    do {
+        printf("Informe a opção: ");
+        valid_input = scanf("%d", &opcao); // scanf retorna o número de itens lidos com sucesso
+        while(getchar() != '\n'); // Limpa o buffer de entrada
+
+        if (valid_input != 1) {
+            printf("\nEntrada inválida. Por favor, digite um numero de 1 a 5.\n");
+        }
+
+    } while (valid_input != 1);
+
     return opcao;
 }
 
